@@ -1,11 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-import PublicGists from './swr/PublicGists';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import "./App.css";
+import PublicGists from "./swr/PublicGists";
+import GistDetails from "./swr/GistDetails";
 
 function App() {
   return (
     <div className="App">
-      <PublicGists />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={PublicGists} exact />
+          <Route path="/:gistId" component={GistDetails} exact />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

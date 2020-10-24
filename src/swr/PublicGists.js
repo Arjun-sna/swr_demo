@@ -1,8 +1,10 @@
 import React from "react";
 import useSWR from "swr";
 import { fetcher } from "./fetcher";
+import { useHistory, Link } from "react-router-dom";
 
 export default () => {
+  const history = useHistory();
   const { data, error } = useSWR(
     "https://api.github.com/gists/public",
     fetcher
@@ -26,17 +28,19 @@ export default () => {
           {data.map(
             (gist) =>
               gist.description && (
-                <div
-                  style={{
-                    width: "500px",
-                    border: `1px solid`,
-                    marginTop: "5px",
-                    cursor: "pointer",
-                    padding: "5px",
-                  }}
-                >
-                  <div>{gist.description}</div>
-                </div>
+                <Link to={`/${gist.id}`}>
+                  <div
+                    style={{
+                      width: "500px",
+                      border: `1px solid`,
+                      marginTop: "5px",
+                      cursor: "pointer",
+                      padding: "5px",
+                    }}
+                  >
+                    <div>{gist.description}</div>
+                  </div>
+                </Link>
               )
           )}
         </div>
