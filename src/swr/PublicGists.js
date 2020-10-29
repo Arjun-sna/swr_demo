@@ -3,19 +3,24 @@ import useSWR from "swr";
 import { fetcher } from "./fetcher";
 import { useHistory, Link } from "react-router-dom";
 
-export default () => {
+const PublicGists = () => {
   const history = useHistory();
   const { data, error } = useSWR(
     "https://api.github.com/gists/public",
-    fetcher
+    fetcher,
+    {
+      focusThrottleInterval: 5000,
+      revalidateOnFocus: false,
+      dedupingInterval: 10000,
+    }
   );
   console.log({ data, error });
   return (
     <div>
       <div>Public gists</div>
-      {error != undefined ? (
+      {error !== undefined ? (
         <div>{error}</div>
-      ) : data == undefined ? (
+      ) : data === undefined ? (
         <div>Loading...</div>
       ) : (
         <div
@@ -48,3 +53,5 @@ export default () => {
     </div>
   );
 };
+
+export default PublicGists;
